@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+a {
+  color: black !important
+}
+
+.brand-logo,
+h2 {
+  font-family: 'Grand Hotel', cursive;
+}
+
+.mycard {
+  margin-top: 30px;
+}
+
+.auth-card {
+  padding: 20px;
+  text-align: center;
+  max-width: 400px;
+  margin: 10px auto;
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid rgb(8, 93, 252) !important;
+  box-shadow: 0 1px 0 0 rgb(8, 93, 252) !important;
+}
+
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid rgb(8, 93, 252) !important;
+  box-shadow: 0 1px 0 0 rgb(8, 93, 252) !important;
+}
+
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  width: 30%;
+  margin: 10px 1%;
+}
+
+.profile-pic {
+  width: 30%;
+  min-width: 120px;
+  margin: 10px;
+  border-radius: 80px;
+}
+
+/* .home {
+
+} */
+
+.home-card {
+  max-width: 800px;
+  height: max-content;
+  margin: 26px auto;
+}
+
+
+#toast-container {
+  top: 30px !important;
+  right: 20px !important;
+  left: auto !important;
+}
+
+.dropdown {
+  width: 150px;
+  margin-left: "auto";
+  position: relative;
+  user-select: none;
+  z-index: 8;
+}
+
+.dropdown .dropdown-btn {
+  padding: 15px 20px;
+  background: #fff;
+  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-between;
+  z-index: 8;
+}
+
+.dropdown .dropdown-contents {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+  font-weight: 500;
+  color: #333;
+  width: 95%;
+  z-index: 8;
+}
+
+.dropdown .dropdown-contents .dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 8;
+}
+
+.dropdown .dropdown-contents .dropdown-item:hover {
+  background: #f4f4f4;
+  z-index: 8;
+}
