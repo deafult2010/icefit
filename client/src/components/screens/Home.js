@@ -23,16 +23,38 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        fetch('/allpost', {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            }
-        }).then(res => res.json())
-            .then(result => {
-                console.log(result)
-                setData(result.posts)
-            })
-    }, [])
+        if (selected === 'All') {
+            fetch('/allpost', {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            }).then(res => res.json())
+                .then(result => {
+                    console.log(result)
+                    setData(result.posts)
+                })
+        } else if (selected === 'Followed') {
+            fetch('/getsubpost', {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            }).then(res => res.json())
+                .then(result => {
+                    console.log(result)
+                    setData(result.posts)
+                })
+        } else if (selected === 'Events') {
+            fetch('/allpost', {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                }
+            }).then(res => res.json())
+                .then(result => {
+                    console.log(result)
+                    setData(result.posts)
+                })
+        }
+    }, [selected])
 
     const likePost = (id) => {
         fetch('/like', {

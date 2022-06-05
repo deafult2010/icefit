@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { UserContext } from '../../App'
 import M from 'materialize-css'
 
 const Signup = () => {
+    const { state, dispatch } = useContext(UserContext)
     const navigate = useNavigate()
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
@@ -63,8 +65,9 @@ const Signup = () => {
                     M.toast({ html: data.error, classes: "#c62828 red darken-3" })
                 }
                 else {
-                    M.toast({ html: data.message, classes: "#388e3c green darken-1" })
-                    navigate('/signin')
+                    Signin()
+                    // M.toast({ html: data.message, classes: "#388e3c green darken-1" })
+                    // navigate('/signin')
                 }
             }).catch(err => {
                 console.log(err)
@@ -77,6 +80,40 @@ const Signup = () => {
         } else {
             uploadFields()
         }
+    }
+
+    // Same code as PostData function in ./SignIn
+    const Signin = () => {
+        // eslint-disable-next-line
+        if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+            M.toast({ html: "invalid email", classes: "#c62828 red darken-3" })
+            return
+        }
+        fetch("/signin", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.error) {
+                    M.toast({ html: data.error, classes: "#c62828 red darken-3" })
+                }
+                else {
+                    localStorage.setItem("jwt", data.token)
+                    localStorage.setItem("user", JSON.stringify(data.user))
+                    dispatch({ type: "USER", payload: data.user })
+                    M.toast({ html: "signed in success", classes: "#388e3c green darken-1" })
+                    navigate('/')
+                }
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
 

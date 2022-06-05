@@ -49,7 +49,7 @@ const SidebarNav = styled.nav`
   justify-content: center;
   position: fixed;
   top: 0;
-  top: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+  top: ${({ sidebar }) => (sidebar ? '0' : '-150%')};
   transition: 350ms;
   z-index: 10;
 `;
