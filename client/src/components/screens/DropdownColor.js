@@ -58,7 +58,7 @@ const DropdownColor = ({ color, setColor }) => {
             <div className={'dropdown-trigger btn ' + colorHex} style={{ display: 'flex', width: '180px', justifyContent: 'space-between' }} data-target='dropdown2' ref={dropdown}><span>{color}</span><span className="material-icons" style={{ marginTop: '5px' }}>arrow_drop_down</span></div>
             <ul id='dropdown2' className='dropdown-content' style={{ display: 'flex' }}>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>No Color<span className="material-icons" color='FF0000'>color_lens</span></DropdownDiv>
-                <li className="divider" tabindex="-1"></li>
+                <li className="divider" tabIndex="-1"></li>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Red<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Orange<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Yellow<span className="material-icons" >color_lens</span></DropdownDiv>

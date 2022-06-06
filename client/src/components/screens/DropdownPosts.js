@@ -33,7 +33,7 @@ const DropdownPosts = ({ selected, setSelected }) => {
             <div className='dropdown-trigger btn #64b5f6 blue darken-1' style={{ display: 'flex', width: '120px', justifyContent: 'space-between' }} data-target='dropdown1' ref={dropdown}><span>{selected}</span><span className="material-icons" style={{ marginTop: '5px' }}>arrow_drop_down</span></div>
             <ul id='dropdown1' className='dropdown-content' style={{ display: 'flex' }}>
                 <DropdownDiv onClick={e => { setSelected(e.target.textContent) }}>All</DropdownDiv>
-                <li className="divider" tabindex="-1"></li>
+                <li className="divider" tabIndex="-1"></li>
                 <DropdownDiv onClick={e => { setSelected(e.target.textContent) }}>Events</DropdownDiv>
                 <DropdownDiv onClick={e => { setSelected(e.target.textContent) }}>Followed</DropdownDiv>
             </ul>
