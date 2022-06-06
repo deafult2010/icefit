@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { UserContext } from '../../App'
 import M from 'materialize-css'
 import { Link } from 'react-router-dom'
-import Dropdown from './Dropdown'
+import DropdownPosts from './DropdownPosts'
 
 const Home = () => {
     const [data, setData] = useState([])
     const [selected, setSelected] = useState("All")
     const { state, dispatch } = useContext(UserContext)
     const [matches, setMatches] = useState(
-        window.matchMedia("(min-width: 650px)").matches
+        window.matchMedia("(min-width: 700px)").matches
     )
     const [font, setFont] = useState("10px")
     const [title, setTitle] = useState("")
 
     useEffect(() => {
-        window.innerWidth >= 650 ? setTitle("User Posts and Events") : setTitle("Posts & Events");
-        window.innerWidth >= 650 ? setFont("40px") : setFont("30px");
+        window.innerWidth >= 700 ? setTitle("User Posts and Events") : setTitle("Posts & Events");
+        window.innerWidth >= 700 ? setFont("40px") : setFont("30px");
         window
-            .matchMedia("(min-width: 650px)")
-            .addEventListener('change', e => { setMatches(e.matches); window.innerWidth >= 650 ? setFont("40px") : setFont("30px"); window.innerWidth >= 650 ? setTitle("User Posts and Events") : setTitle("Posts & Events") });
+            .matchMedia("(min-width: 700px)")
+            .addEventListener('change', e => { setMatches(e.matches); window.innerWidth >= 700 ? setFont("40px") : setFont("30px"); window.innerWidth >= 700 ? setTitle("User Posts and Events") : setTitle("Posts & Events") });
     }, []);
 
     useEffect(() => {
@@ -179,7 +179,7 @@ const Home = () => {
                 <div className="brand-logo left" style={{ fontSize: font }}>{title}</div>
                 <div style={{ marginLeft: "auto" }}>
                 </div>
-                <Dropdown selected={selected} setSelected={setSelected}></Dropdown>
+                <DropdownPosts selected={selected} setSelected={setSelected}></DropdownPosts>
             </div>
             {
                 data.map(item => {

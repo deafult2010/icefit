@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import M from 'materialize-css'
+import Logo from '../Logo'
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -42,7 +43,7 @@ const SignIn = () => {
     return (
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h2>Instagram</h2>
+                <h2>{Logo()}</h2>
                 <form onSubmit={onFormSubmit}>
                     <input
                         type="password"

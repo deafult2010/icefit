@@ -10,6 +10,7 @@ import UserProfile from './components/screens/UserProfile'
 import CreatePost from './components/screens/CreatePost'
 import Reset from './components/screens/Reset'
 import NewPassword from './components/screens/NewPassword'
+import Calendar from './components/screens/Calendar'
 import { initialState, reducer } from './reducers/userReducers'
 
 export const UserContext = createContext()
@@ -39,6 +40,7 @@ const Routing = () => {
       <Route path="/create" element={<CreatePost />} />
       <Route exact path="/reset" element={<Reset />} />
       <Route path="/reset/:token" element={<NewPassword />} />
+      <Route path="/bookings" element={<Calendar />} />
     </Routes>
   )
 }

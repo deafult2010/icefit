@@ -7,12 +7,12 @@ const Profile = () => {
     const { state, dispatch } = useContext(UserContext)
     const [image, setImage] = useState("")
     const [matches, setMatches] = useState(
-        window.matchMedia("(min-width: 650px)").matches
+        window.matchMedia("(min-width: 700px)").matches
     )
 
     useEffect(() => {
         window
-            .matchMedia("(min-width: 650px)")
+            .matchMedia("(min-width: 700px)")
             .addEventListener('change', e => setMatches(e.matches));
     }, []);
 

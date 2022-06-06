@@ -6,7 +6,7 @@ a {
 
 .brand-logo,
 h2 {
-  font-family: 'Grand Hotel', cursive;
+  font-family: 'heisei-kaku-gothic-std', sans-serif;
 }
 
 .mycard {
@@ -49,69 +49,11 @@ h2 {
   border-radius: 80px;
 }
 
-/* .home {
-
-} */
-
 .home-card {
   max-width: 800px;
   height: max-content;
   margin: 26px auto;
 }
-
-
-#toast-container {
-  top: 30px !important;
-  right: 20px !important;
-  left: auto !important;
-}
-
-.dropdown {
-  width: 150px;
-  margin-left: "auto";
-  position: relative;
-  user-select: none;
-  z-index: 8;
-}
-
-.dropdown .dropdown-btn {
-  padding: 15px 20px;
-  background: #fff;
-  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
-  font-weight: bold;
-  color: #333;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  justify-content: space-between;
-  z-index: 8;
-}
-
-.dropdown .dropdown-contents {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  padding: 10px;
-  background: #fff;
-  box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
-  font-weight: 500;
-  color: #333;
-  width: 95%;
-  z-index: 8;
-}
-
-.dropdown .dropdown-contents .dropdown-item {
-  padding: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  z-index: 8;
-}
-
-.dropdown .dropdown-contents .dropdown-item:hover {
-  background: #f4f4f4;
-  z-index: 8;
-}
-
 
 .collection-item {
   width: 100%;

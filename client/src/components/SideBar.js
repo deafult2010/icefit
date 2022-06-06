@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../App'
-
+import Search from './Search'
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -79,6 +79,11 @@ const Sidebar = (sidebar, showSidebar, setSidebar) => {
                                     <span className="material-icons" >home</span> Home
                                 </div>
                             </SidebarLink>
+                            <SidebarLink to="#" onClick={showSidebar} data-target="modal1" className='modal-trigger'>
+                                <div style={{ color: "#ffffff" }}>
+                                    <span className="material-icons" >search</span> Search Users
+                                </div>
+                            </SidebarLink>
                             <SidebarLink to={'/bookings'} onClick={showSidebar}>
                                 <div style={{ color: "#ffffff" }}>
                                     <span className="material-icons" >event</span> Bookings
@@ -130,6 +135,7 @@ const Sidebar = (sidebar, showSidebar, setSidebar) => {
                     }
                 </SidebarWrap>
             </SidebarNav>
+            <Search />
         </>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../App'
 import M from 'materialize-css'
+import Logo from '../Logo'
 
 const SignIn = () => {
     const { state, dispatch } = useContext(UserContext)
@@ -52,7 +53,7 @@ const SignIn = () => {
     return (
         <div className="mycard">
             <div className="card auth-card input-field">
-                <h2>Instagram</h2>
+                <h2>{Logo()}</h2>
                 <form onSubmit={onFormSubmit}>
                     <input
                         type="text"
