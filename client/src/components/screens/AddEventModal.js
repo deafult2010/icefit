@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import M from 'materialize-css'
-import DateTime from 'react-datetime'
+// import DateTime from 'react-datetime'
 import DropdownColor from './DropdownColor'
 
 const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
@@ -31,14 +31,14 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
                 <div className="modal-content">
                     <form onSubmit={onSubmit}>
                         <input placeholder='Title' value={title} onChange={e => setTitle(e.target.value)}></input>
-                        <div>
+                        {/* <div>
                             <label>Start Date</label>
                             <DateTime value={start} onChange={date => setStart(date)} />
                         </div>
                         <div>
                             <label>End Date</label>
                             <DateTime value={end} onChange={date => setEnd(date)} />
-                        </div>
+                        </div> */}
                         <div>
                             <label>Event Color</label>
                             <DropdownColor color={color} setColor={setColor}></DropdownColor>
