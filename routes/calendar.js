@@ -14,8 +14,8 @@ const Event = mongoose.model("Event")
 // })
 
 router.post('/create-event', requireLogin, (req, res) => {
-    const { title, start, end } = req.body
-    if (!title || !start || !end) {
+    const { title, start, end, borderColor, backgroundColor } = req.body
+    if (!title || !start || !end || !borderColor || !backgroundColor) {
         return res.status(422).json({ error: "please add all the fields" })
     }
     const event = Event(req.body)

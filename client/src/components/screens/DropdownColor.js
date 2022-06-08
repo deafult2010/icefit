@@ -23,7 +23,7 @@ const DropdownDiv = styled.div`
 const DropdownColor = ({ color, setColor }) => {
 
     const dropdown = useRef(null)
-    const [colorHex, setColorHex] = useState('#f44336 red')
+    const [colorHex, setColorHex] = useState('#2196f3 blue')
     console.log(color)
 
     useEffect(() => {
@@ -57,13 +57,12 @@ const DropdownColor = ({ color, setColor }) => {
         <div style={{ margin: 'auto 0 auto 0' }}>
             <div className={'dropdown-trigger btn ' + colorHex} style={{ display: 'flex', width: '180px', justifyContent: 'space-between' }} data-target='dropdown2' ref={dropdown}><span>{color}</span><span className="material-icons" style={{ marginTop: '5px' }}>arrow_drop_down</span></div>
             <ul id='dropdown2' className='dropdown-content' style={{ display: 'flex' }}>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>No Color<span className="material-icons" color='FF0000'>color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Blue<span className="material-icons" >color_lens</span></DropdownDiv>
                 <li className="divider" tabIndex="-1"></li>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Red<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Orange<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Yellow<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Green<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Blue<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Purple<span className="material-icons" >color_lens</span></DropdownDiv>
                 <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Pink<span className="material-icons" >color_lens</span></DropdownDiv>
             </ul>

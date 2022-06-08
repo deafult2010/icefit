@@ -14,8 +14,8 @@ const Calendar = () => {
     const calendarRef = useRef(null)
 
     const onEventAdded = event => {
-        const { title, start, end } = event
-        if (!title || !start || !end) {
+        const { title, start, end, color } = event
+        if (!title || !start || !end || !color) {
             M.toast({ html: "please add all the fields", classes: "#c62828 red darken-3" })
             return
         }
@@ -23,11 +23,13 @@ const Calendar = () => {
         calendarApi.addEvent({
             start: moment(event.start).toDate(),
             end: moment(event.end).toDate(),
-            title: event.title
+            title: event.title,
+            color: event.color
         })
     }
 
     const handleEventAdd = (data) => {
+        console.log(data)
         axios.post('/create-event', data.event, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")

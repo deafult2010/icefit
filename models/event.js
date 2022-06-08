@@ -11,6 +11,14 @@ const eventSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
+    },
+    backgroundColor: {
+        type: String,
+        required: true
+    },
+    borderColor: {
+        type: String,
+        required: true
     }
 })
 

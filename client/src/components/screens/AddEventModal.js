@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import M from 'materialize-css'
-// import DateTime from 'react-datetime'
+import setHours from 'date-fns/setHours'
+import setMinutes from 'date-fns/setMinutes'
+import DatePicker from 'react-datepicker'
 import DropdownColor from './DropdownColor'
 
 const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
     const [title, setTitle] = useState("")
-    const [start, setStart] = useState(new Date())
+    const [start, setStart] = useState(setHours(setMinutes(new Date(), 30), 16))
     const [end, setEnd] = useState(new Date())
-    const [color, setColor] = useState("No Color")
+    const [color, setColor] = useState("Blue")
     const searchModal = useRef(null)
 
     useEffect(() => {
@@ -20,7 +22,8 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
         onEventAdded({
             title,
             start,
-            end
+            end,
+            color
         })
         onClose();
     }
@@ -31,20 +34,33 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
                 <div className="modal-content">
                     <form onSubmit={onSubmit}>
                         <input placeholder='Title' value={title} onChange={e => setTitle(e.target.value)}></input>
-                        {/* <div>
-                            <label>Start Date</label>
-                            <DateTime value={start} onChange={date => setStart(date)} />
+                        <div style={{ display: 'flex' }}>
+                            <span>
+                                <label>Start Date</label>
+                                <DatePicker
+                                    selected={start}
+                                    onChange={(date) => setStart(date)}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                />
+                            </span>
+                            <span>
+                                <label>End Date</label>
+                                <DatePicker
+                                    selected={end}
+                                    onChange={(date) => setEnd(date)}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                />
+                            </span>
                         </div>
-                        <div>
-                            <label>End Date</label>
-                            <DateTime value={end} onChange={date => setEnd(date)} />
-                        </div> */}
                         <div>
                             <label>Event Color</label>
                             <DropdownColor color={color} setColor={setColor}></DropdownColor>
                         </div>
-                        {/* <input placeholder='Color' value={color} onChange={e => setColor(e.target.value)}></input> */}
-                        <button>Add Event</button>
+                        <button className="modal-close" style={{ marginTop: '10px' }}>Add Event</button>
                     </form>
                 </div>
                 <div className="modal-footer">
