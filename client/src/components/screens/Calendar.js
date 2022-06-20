@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
+import { UserContext } from '../../App'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
@@ -10,8 +11,14 @@ import M from 'materialize-css'
 
 const Calendar = () => {
 
+    const { state, dispatch } = useContext(UserContext)
     const [events, setEvents] = useState([])
     const calendarRef = useRef(null)
+    // console.log(events)
+
+    useEffect(() => {
+        console.log(events)
+    }, [events])
 
     const onEventAdded = event => {
         const { title, start, end, color } = event
@@ -24,21 +31,80 @@ const Calendar = () => {
             start: moment(event.start).toDate(),
             end: moment(event.end).toDate(),
             title: event.title,
-            color: event.color
-        })
+            color: event.color,
+            attending: [event.isChecked ? event.state._id : null]
+        }, true)
     }
 
     const handleEventAdd = (data) => {
-        console.log(data)
         axios.post('/create-event', data.event, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
+        }).then((response) => {
+            setEvents([...events, response.data.event])
         }).catch(function (error) {
             if (error.response) {
                 M.toast({ html: error.response.data.error, classes: "#c62828 red darken-3" })
             }
         });
+    }
+
+    const handleEventDelete = (id) => {
+        axios.delete(`/delete-event/${id}`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then((result) => {
+            const newData = events.filter(item => {
+                return item._id !== result.data.id
+            })
+            setEvents(newData)
+        }).catch(function (error) {
+            if (error.response) {
+                M.toast({ html: error.response.data.msg, classes: "#c62828 red darken-3" })
+                setEvents([...events])
+            }
+        });
+    }
+
+
+    const handleUpdateEventAdd = (id) => {
+        axios.put(`/attend-event`, { eventId: id }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(result => {
+            const newData = events.map(event => {
+                if (event._id === result.data._id) {
+                    return result.data
+                } else {
+                    return event
+                }
+            })
+            setEvents(newData)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    const handleUpdateEventRemove = (id) => {
+        axios.put(`/unattend-event`, { eventId: id }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(result => {
+            const newData = events.map(event => {
+                if (event._id === result.data._id) {
+                    return result.data
+                } else {
+                    return event
+                }
+            })
+            setEvents(newData)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const handleDatesSet = (data) => {
@@ -56,24 +122,72 @@ const Calendar = () => {
         })
     }
 
-    const eventClick = (eventClick) => {
+    const eventClick = (e) => {
         Alert.fire({
-            title: eventClick.event.title,
+            title: e.event.title,
             html:
                 `<div class="table-responsive">
           <table class="table">
           <tbody>
           <tr >
-          <td>Title</td>
-          <td><strong>` +
-                eventClick.event.title +
-                `</strong></td>
-          </tr>
-          <tr >
-          <td>Start Time</td>
+          <div style={{ display: 'flex' }}>
+          <span>
+          <td>Start Date</td>
           <td><strong>
           ` +
-                eventClick.event.start +
+                moment(e.event.start).format('	ll') +
+                `
+          </strong></td>
+          </span>
+          <span>
+          <td>End Date</td>
+          <td><strong>
+          ` +
+                moment(e.event.end).format('	ll') +
+                `
+          </strong></td>
+          </span>
+        </div>
+          </tr>
+          <tr >
+          <div style={{ display: 'flex' }}>
+            <span>
+            <td>Start Time</td>
+            <td><strong>
+            ` +
+                moment(e.event.start).format('LT') +
+                `
+            </strong></td>
+            </span>
+            <span>
+            <td>End Time</td>
+            <td><strong>
+            ` +
+                moment(e.event.end).format('LT') +
+                `
+            </strong></td>
+            </span>
+          </div>
+          </tr>
+          <tr >
+          <td>Title</td>
+          <td><strong>` +
+                e.event.title +
+                `
+          </strong></td>
+          </tr>
+          <tr >
+          <td>Created By</td>
+          <td><strong>` +
+                e.event.extendedProps.user.name +
+                `
+          </strong></td>
+          </tr>
+          <tr >
+          <td>Attending</td>
+          <td><strong>
+          ` +
+                e.event.extendedProps.attending.map(item => { return (item.name) }) +
                 `
           </strong></td>
           </tr>
@@ -82,14 +196,28 @@ const Calendar = () => {
           </div>`,
 
             showCancelButton: true,
+            showDenyButton: true,
+            showConfirmButton: state._id === e.event.extendedProps.user._id ? true : false,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
+            denyButtonColor: e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1 ? "#0ea60c" : "#d33",
             confirmButtonText: "Remove Event",
-            cancelButtonText: "Close"
+            cancelButtonText: "Close",
+            // console.log(events.findIndex((item) => item._id === e.event.extendedProps._id))
+            denyButtonText: e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1 ? "Attend" : "Unattend",
+            showLoaderOnDeny: true,
+            preDeny: () => {
+                e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1
+                    ? handleUpdateEventAdd(e.event.extendedProps._id)
+                    : handleUpdateEventRemove(e.event.extendedProps._id)
+            }
         }).then(result => {
             if (result.value) {
-                eventClick.event.remove(); // It will remove event from the calendar
+                e.event.remove(); // It will remove event from the calendar
+                handleEventDelete(e.event._def.extendedProps._id)
                 Alert.fire("Deleted!", "Your Event has been deleted.", "success");
+            } else if (result.isDenied) {
+                console.log('123')
             }
         });
     };
@@ -110,10 +238,10 @@ const Calendar = () => {
                     datesSet={(date) => handleDatesSet(date)}
                     eventClick={event => eventClick(event)}
                 // editable={false}
-                // selectable={false}
+                // selectable={true}
                 />
             </div>
-            <AddEventModal onEventAdded={event => onEventAdded(event)} />
+            <AddEventModal onEventAdded={e => onEventAdded(e)} />
         </div>
     )
 }

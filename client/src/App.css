@@ -58,3 +58,7 @@ h2 {
 .collection-item {
   width: 100%;
 }
+
+.fc-event {
+  cursor: pointer;
+}

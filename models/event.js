@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId } = mongoose.Schema.Types
 const eventSchema = new mongoose.Schema({
     start: {
         type: Date,
@@ -19,7 +20,12 @@ const eventSchema = new mongoose.Schema({
     borderColor: {
         type: String,
         required: true
-    }
+    },
+    user: {
+        type: ObjectId,
+        ref: "User"
+    },
+    attending: [{ type: ObjectId, ref: "User" }]
 })
 
 mongoose.model("Event", eventSchema)

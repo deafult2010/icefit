@@ -9,7 +9,7 @@ const DropdownDiv = styled.div`
   align-items: center;
   padding: 20px;
   list-style: none;
-  height: 60px;
+  height: 20px;
   text-decoration: none;
   font-size: 18px;
   &:hover {
@@ -24,7 +24,6 @@ const DropdownColor = ({ color, setColor }) => {
 
     const dropdown = useRef(null)
     const [colorHex, setColorHex] = useState('#2196f3 blue')
-    console.log(color)
 
     useEffect(() => {
         if (color === 'No Color') {
@@ -45,8 +44,6 @@ const DropdownColor = ({ color, setColor }) => {
             setColorHex('#ff4081 pink accent-2')
         }
         else setColorHex('#2196f3 blue')
-        console.log(color)
-        console.log(colorHex)
     }, [color])
 
     useEffect(() => {
@@ -57,14 +54,14 @@ const DropdownColor = ({ color, setColor }) => {
         <div style={{ margin: 'auto 0 auto 0' }}>
             <div className={'dropdown-trigger btn ' + colorHex} style={{ display: 'flex', width: '180px', justifyContent: 'space-between' }} data-target='dropdown2' ref={dropdown}><span>{color}</span><span className="material-icons" style={{ marginTop: '5px' }}>arrow_drop_down</span></div>
             <ul id='dropdown2' className='dropdown-content' style={{ display: 'flex' }}>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Blue<span className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Blue<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
                 <li className="divider" tabIndex="-1"></li>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Red<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Orange<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Yellow<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Green<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Purple<span className="material-icons" >color_lens</span></DropdownDiv>
-                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Pink<span className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Red<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Orange<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Yellow<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Green<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Purple<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
+                <DropdownDiv onClick={e => { setColor(e.target.textContent.substring(0, e.target.textContent.length - 10)) }}>Pink<span style={{ zIndex: -1 }} className="material-icons" >color_lens</span></DropdownDiv>
             </ul>
         </div>
     )
