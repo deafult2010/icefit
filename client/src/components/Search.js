@@ -7,7 +7,8 @@ const Search = () => {
 
     const { pathname } = useLocation();
     const searchModal = useRef(null)
-    const [search, setSearch] = useState('');
+    const [searchEmail, setSearchEmail] = useState('');
+    const [searchName, setSearchName] = useState('');
     const [userDetails, setUserDetails] = useState([])
     const { state, dispatch } = useContext(UserContext)
 
@@ -18,8 +19,24 @@ const Search = () => {
     }, [])
 
     const fetchUsers = (query) => {
-        setSearch(query)
+        setSearchEmail(query)
         fetch('/search-users', {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                query: query
+            })
+        }).then(res => res.json())
+            .then(results => {
+                setUserDetails(results.user)
+            })
+    }
+
+    const fetchNames = (query) => {
+        setSearchName(query)
+        fetch('/search-names', {
             method: "post",
             headers: {
                 "Content-Type": "application/json"
@@ -38,9 +55,15 @@ const Search = () => {
             <div className="modal-content">
                 <input
                     type="text"
-                    placeholder="search users"
-                    value={search}
+                    placeholder="search by email"
+                    value={searchEmail}
                     onChange={(e) => fetchUsers(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="search by name"
+                    value={searchName}
+                    onChange={(e) => fetchNames(e.target.value)}
                 />
                 <ul className="collection" style={{ color: "black" }}>
                     {userDetails.map(item => {
@@ -53,7 +76,7 @@ const Search = () => {
                 </ul>
             </div>
             <div className="modal-footer">
-                <button className="modal-close waves-effect waves-green btn-flat" onClick={() => setSearch('')}>Close</button>
+                <button className="modal-close waves-effect waves-green btn-flat" onClick={() => { setSearchEmail(''); setSearchName(''); }}>Close</button>
             </div>
         </div>
     )

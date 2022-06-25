@@ -71,10 +71,31 @@ router.put('/updatepic', requireLogin, (req, res) => {
     })
 })
 
+router.put('/updateemail', requireLogin, (req, res) => {
+    User.findByIdAndUpdate(req.user._id, { $set: { email: req.body.email } }, { new: true }, (err, result) => {
+        if (err) {
+            return res.status(422).json({ error: "email cannot update" })
+        }
+        res.json(result)
+    })
+})
+
 router.post('/search-users', (req, res) => {
-    let userPattern = new RegExp("^" + req.body.query)
+    let userPattern = new RegExp("^" + req.body.query, 'i')
     User.find({ email: { $regex: userPattern } })
-        .select("_id email")
+        // .select("_id name email")
+        .then(user => {
+            res.json({ user })
+        }).catch(err => {
+            console.log(err)
+        })
+})
+
+router.post('/search-names', (req, res) => {
+    let userPattern = new RegExp("^" + req.body.query, 'i')
+    User.find({ name: { $regex: userPattern } })
+        // .select("_id name email")
+        .sort([['name', 'desc']])
         .then(user => {
             res.json({ user })
         }).catch(err => {

@@ -25,7 +25,7 @@ const About = () => {
             <p>
                 <strong>Version: </strong>1.0
             </p>
-            <a href='http://github.com/deafult2010/P5Test1' >
+            <a href='https://github.com/deafult2010/icefit' >
                 <img width='20px' height='20px'
                     src='https://res.cloudinary.com/dmla0lcbu/image/upload/v1655149434/GitHub-Mark-64px_cdwfkl.png'
                     alt="GithubLogo"

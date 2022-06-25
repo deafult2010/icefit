@@ -185,13 +185,22 @@ const Home = () => {
                 data.map(item => {
                     return (
                         <div className="card home-card" key={item._id}>
-                            <h5 style={{ paddingLeft: "24px", paddingTop: "10px" }}><Link to={item.postedBy._id !== state._id ? "/profile/" + item.postedBy._id : "/profile"} >{item.postedBy.name}</Link>{item.postedBy._id === state._id &&
-                                <button className="btn waves-effect waves-light #64b5f6 red" style={{ float: "right", marginRight: "10px", marginBottom: "10px" }} onClick={() => {
-                                    deletePost(item._id)
-                                }}>
-                                    <i className="material-icons" style={{ color: "white" }}>delete</i>
-                                </button>
-                            }</h5>
+                            <h5 style={{ paddingLeft: "24px", paddingTop: "10px" }}>
+                                <Link to={item.postedBy._id !== state._id ? "/profile/" + item.postedBy._id : "/profile"} style={{ fontSize: '40px' }}>
+                                    <img style={{ marginTop: "20px", width: "30px", height: "30px", borderRadius: '30px' }}
+                                        src={item.postedBy.pic}
+                                        alt="profile pic"
+                                    />
+                                    &nbsp;
+                                    {item.postedBy.name}
+                                </Link>
+                                {item.postedBy._id === state._id &&
+                                    <button className="btn waves-effect waves-light #64b5f6 red" style={{ float: "right", marginRight: "10px", marginBottom: "10px" }} onClick={() => {
+                                        deletePost(item._id)
+                                    }}>
+                                        <i className="material-icons" style={{ color: "white" }}>delete</i>
+                                    </button>
+                                }</h5>
                             <div className="card-image">
                                 <img
                                     src={item.photo}
@@ -199,23 +208,32 @@ const Home = () => {
                                 />
                             </div>
                             <div className="card-content">
-                                <button className="btn waves-effect waves-light #64b5f6 blue darken-1">
-                                    <i className="material-icons" style={{ color: "red" }}>favorite</i>
-                                </button>
-                                {item.likes.includes(state._id)
-                                    ? <button className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => { unlikePost(item._id) }}><i className="material-icons" style={{ color: "white" }}>thumb_down</i></button>
-                                    : <button className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => { likePost(item._id) }}><i className="material-icons" style={{ color: "white" }}>thumb_up</i></button>
-                                }
-                                <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
+                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "auto" }}>
+                                    <div>
+                                        <h4>{item.title}</h4>
+                                    </div>
+                                    <div></div>
+                                    <div>
+                                        <button className="btn waves-effect waves-light #64b5f6 blue darken-1">
+                                            <i className="material-icons" style={{ color: "red" }}>favorite</i>
+                                        </button>
+                                        {item.likes.includes(state._id)
+                                            ? <button className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => { unlikePost(item._id) }}><i className="material-icons" style={{ color: "white" }}>thumb_down</i></button>
+                                            : <button className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => { likePost(item._id) }}><i className="material-icons" style={{ color: "white" }}>thumb_up</i></button>
+                                        }
+                                        <h6>{item.likes.length} likes</h6>
+                                    </div>
+                                </div>
                                 <p>{item.body}</p>
+                                <hr style={{ borderTop: "3px dashed #ddd" }} />
+                                <h5>Comments</h5>
                                 {
                                     item.comments.map(record => {
                                         return (
                                             <h6 key={record._id}>
                                                 <span style={{ display: "flex", justifyContent: "space-between", marginBottom: "auto" }}>
                                                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                                                        <span style={{ fontWeight: "500", alignItems: "center" }}>{record.postedBy.name}:</span>
+                                                        <span style={{ fontWeight: "500", alignItems: "center" }}><Link to={record.postedBy._id !== state._id ? "/profile/" + record.postedBy._id : "/profile"} >{record.postedBy.name}</Link>:</span>
                                                         <span style={{ alignItems: "center" }}>{record.text}</span>
                                                     </div>
                                                     {record.postedBy._id === state._id ?

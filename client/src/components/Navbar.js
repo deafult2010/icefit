@@ -27,9 +27,10 @@ const NavBar = () => {
                 <>
                     <Link to={state ? "/" : "/signin"} className="brand-logo left">{Logo()}</Link>
                     <ul id="nav-mobile" className="right">
-                        <li key="search"><Link to="#" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span data-target="modal1" className="material-icons modal-trigger">search</span>&nbsp;</Link></li>
+                        {/* <li key="search"><Link to="#" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span data-target="modal1" className="material-icons modal-trigger">search</span>&nbsp;</Link></li> */}
                         <li key="bookings"><Link to="/bookings" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span className="material-icons">event</span> &nbsp; Bookings</Link></li>
                         <li key="profile"><Link to="/profile" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span className="material-icons">person_pin</span> &nbsp; Profile</Link></li>
+                        <li key="ratings"><Link to="/ratings" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span className="material-icons">fitness_center</span>&nbsp;Ratings</Link></li>
                         <li key="create"><Link to="/create" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span className="material-icons">message</span> &nbsp; Create Post</Link></li>
                         <li key="about"><Link to="/about" style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 8px' }}><span className="material-icons">help_outline</span> &nbsp; About</Link></li>
                         <li key="button">

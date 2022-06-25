@@ -187,7 +187,13 @@ const Calendar = () => {
           <td>Attending</td>
           <td><strong>
           ` +
-                e.event.extendedProps.attending.map(item => { return (item.name) }) +
+                e.event.extendedProps.attending.map(item => {
+                    return (
+                        "<a href='https://icefit.herokuapp.com/profile/" + item._id + "'>" + item.name + "</a>"
+                    )
+                }) +
+                // <a href='https://icefit.herokuapp.com/profile/${item._id}' >item.name</a>
+                // <Link to={record.postedBy._id !== state._id ? "/profile/" + record.postedBy._id : "/profile"} >{record.postedBy.name}</Link>
                 `
           </strong></td>
           </tr>
@@ -204,7 +210,7 @@ const Calendar = () => {
             confirmButtonText: "Remove Event",
             cancelButtonText: "Close",
             // console.log(events.findIndex((item) => item._id === e.event.extendedProps._id))
-            denyButtonText: e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1 ? "Attend" : "Unattend",
+            denyButtonText: e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1 ? "Attend" : "Leave",
             showLoaderOnDeny: true,
             preDeny: () => {
                 e.event.extendedProps.attending.findIndex(item => item._id === state._id) === -1

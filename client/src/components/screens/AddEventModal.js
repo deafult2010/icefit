@@ -11,7 +11,7 @@ const AddEventModal = ({ isOpen, onClose, onEventAdded }) => {
 
     const { state, dispatch } = useContext(UserContext)
     const [title, setTitle] = useState("")
-    const [start, setStart] = useState(setHours(setMinutes(new Date(), 30), 16))
+    const [start, setStart] = useState(setHours(setMinutes(new Date(), 0), 12))
     const [end, setEnd] = useState(new Date())
     const [color, setColor] = useState("Blue")
     const searchModal = useRef(null)

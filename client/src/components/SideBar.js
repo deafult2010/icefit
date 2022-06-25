@@ -79,11 +79,11 @@ const Sidebar = (sidebar, showSidebar, setSidebar) => {
                                     <span className="material-icons" >home</span> Home
                                 </div>
                             </SidebarLink>
-                            <SidebarLink to="#" onClick={showSidebar} data-target="modal1" className='modal-trigger'>
+                            {/* <SidebarLink to="#" onClick={showSidebar} data-target="modal1" className='modal-trigger'>
                                 <div style={{ color: "#ffffff" }}>
                                     <span className="material-icons" >search</span> Search Users
                                 </div>
-                            </SidebarLink>
+                            </SidebarLink> */}
                             <SidebarLink to={'/bookings'} onClick={showSidebar}>
                                 <div style={{ color: "#ffffff" }}>
                                     <span className="material-icons" >event</span> Bookings
@@ -92,6 +92,11 @@ const Sidebar = (sidebar, showSidebar, setSidebar) => {
                             <SidebarLink to={'/profile'} onClick={showSidebar}>
                                 <div style={{ color: "#ffffff" }}>
                                     <span className="material-icons" >person_pin</span> Profile
+                                </div>
+                            </SidebarLink>
+                            <SidebarLink to={'/ratings'} onClick={showSidebar}>
+                                <div style={{ color: "#ffffff" }}>
+                                    <span className="material-icons" >fitness_center</span> Ratings
                                 </div>
                             </SidebarLink>
                             <SidebarLink to={'/create'} onClick={showSidebar}>

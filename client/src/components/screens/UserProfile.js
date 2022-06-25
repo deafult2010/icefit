@@ -97,7 +97,7 @@ const Profile = () => {
             {userProfile ?
                 <div style={{ maxWidth: "1400px", margin: "0px auto" }}>
                     <div style={{ display: "flex", justifyContent: "space-evenly", marginBottom: "18px", borderBottom: "1px solid grey" }}>
-                        <div style={{ display: "flex", justifyContent: "right", margin: "10px 10px" }}>
+                        <div style={{ display: "flex", justifyContent: "right", margin: "10px 10px", flexDirection: 'column', alignItems: 'center' }}>
                             {matches ?
                                 <img className="profile-pic" style={{ width: "240px", height: "240px" }}
                                     src={userProfile.user.pic}
@@ -109,15 +109,6 @@ const Profile = () => {
                                     alt="profile pic"
                                 />
                             }
-                        </div>
-                        <div style={{ marginRight: "50px" }}>
-                            <h4>{userProfile.user.name}</h4>
-                            <h5>{userProfile.user.email}</h5>
-                            <div style={{ display: "flex", justifyContent: "space-between", width: "118%" }}>
-                                <h6>{userProfile.posts.length} posts</h6>
-                                <h6>{userProfile.user.followers.length} followers</h6>
-                                <h6>{userProfile.user.following.length} following</h6>
-                            </div>
                             {showfollow ?
                                 <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => followUser()}>
                                     Follow
@@ -126,8 +117,54 @@ const Profile = () => {
                                 <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => unfollowUser()}>
                                     Unfollow
                                 </button>}
+                        </div>
+                        <div style={{ width: '40%', minWidth: '250px' }}>
+                            <h4>{userProfile.user.name}</h4>
+                            <h5>{userProfile.user.email}</h5>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <h6>{userProfile.posts.length} posts</h6>
+                                <h6>{userProfile.user.followers.length} followers</h6>
+                                <h6>{userProfile.user.following.length} following</h6>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style={{ padding: '5px' }}>Game</th>
+                                        <th style={{ padding: '5px' }}>Rating</th>
+                                        <th style={{ padding: '5px' }}>Played</th>
+                                        <th style={{ padding: '5px' }}>Rated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ padding: '5px' }}>Tennis</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tennisRating}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tennisGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tennisRatedGamesPlayed}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: '5px' }}>Badminton</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.badmintonRating}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.badmintonGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.badmintonRatedGamesPlayed}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: '5px' }}>Table Tennis</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tableTennisRating}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tableTennisGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.tableTennisRatedGamesPlayed}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ padding: '5px' }}>Chess</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.chessRating}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.chessGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{userProfile.user.chessRatedGamesPlayed}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                         </div>
+
                     </div>
                     <div className="gallery">
                         {
