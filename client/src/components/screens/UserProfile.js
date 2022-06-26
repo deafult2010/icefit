@@ -121,7 +121,7 @@ const Profile = () => {
                         <div style={{ width: '40%', minWidth: '250px' }}>
                             <h4>{userProfile.user.name}</h4>
                             <h5>{userProfile.user.email}</h5>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <div style={{ display: "flex", gap: '20px' }}>
                                 <h6>{userProfile.posts.length} posts</h6>
                                 <h6>{userProfile.user.followers.length} followers</h6>
                                 <h6>{userProfile.user.following.length} following</h6>
