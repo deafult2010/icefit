@@ -26,5 +26,11 @@ export const reducer = (state, action) => {
             email: action.payload
         }
     }
+    if (action.type === "UPDATECREDITS") {
+        return {
+            ...state,
+            credits: action.payload
+        }
+    }
     return state
 }

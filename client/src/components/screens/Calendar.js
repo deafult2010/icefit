@@ -1,23 +1,34 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { UserContext } from '../../App'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
+import interactionPlugin from "@fullcalendar/interaction";
 import Alert from "sweetalert2";
 import AddEventModal from './AddEventModal'
 import axios from 'axios'
 import moment from 'moment'
 import M from 'materialize-css'
+import { useLocation } from 'react-router-dom'
 
 const Calendar = () => {
 
     const { state, dispatch } = useContext(UserContext)
     const [events, setEvents] = useState([])
     const calendarRef = useRef(null)
+    const { hash } = useLocation();
     // console.log(events)
 
     useEffect(() => {
-        console.log(events)
+        const calendarApi = calendarRef.current.getApi()
+        const data = calendarApi.getEvents()
+        data.map(item => {
+            if (item._def.extendedProps._id === hash.substring(1)) {
+                console.log(item)
+                const e = new Object();
+                e.event = item;
+                eventClick(e)
+            }
+        })
     }, [events])
 
     const onEventAdded = event => {
@@ -37,6 +48,9 @@ const Calendar = () => {
     }
 
     const handleEventAdd = (data) => {
+        // if (data.event.title === 'dummy2') {
+        //     return
+        // }
         axios.post('/create-event', data.event, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -46,6 +60,7 @@ const Calendar = () => {
         }).catch(function (error) {
             if (error.response) {
                 M.toast({ html: error.response.data.error, classes: "#c62828 red darken-3" })
+                console.log('ssssssss')
             }
         });
     }
@@ -123,6 +138,7 @@ const Calendar = () => {
     }
 
     const eventClick = (e) => {
+        const today = new Date().getTime()
         Alert.fire({
             title: e.event.title,
             html:
@@ -202,7 +218,7 @@ const Calendar = () => {
           </div>`,
 
             showCancelButton: true,
-            showDenyButton: true,
+            showDenyButton: moment(e.event.start).valueOf() < today ? false : true,
             showConfirmButton: state._id === e.event.extendedProps.user._id ? true : false,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
@@ -230,6 +246,13 @@ const Calendar = () => {
 
 
 
+    events.map(item => {
+        item.attending.map(element => {
+            if (element._id === state._id) {
+                item.classNames = [`pill-${item.borderColor}`]
+            }
+        })
+    })
 
     return (
         <div>

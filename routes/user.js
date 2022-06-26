@@ -103,4 +103,15 @@ router.post('/search-names', (req, res) => {
         })
 })
 
+router.put('/add-credits', requireLogin, (req, res) => {
+    console.log(req.user._id)
+    console.log(req.body.credits)
+    User.findByIdAndUpdate(req.user._id, { $set: { credits: req.body.credits } }, { new: true }, (err, result) => {
+        if (err) {
+            return res.status(422).json({ error: "credits cannot update" })
+        }
+        res.json(result)
+    })
+})
+
 module.exports = router

@@ -109,14 +109,19 @@ const Profile = () => {
                                     alt="profile pic"
                                 />
                             }
-                            {showfollow ?
-                                <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => followUser()}>
-                                    Follow
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                {showfollow ?
+                                    <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => followUser()}>
+                                        Follow
+                                    </button>
+                                    :
+                                    <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => unfollowUser()}>
+                                        Unfollow
+                                    </button>}
+                                <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" disabled>
+                                    Message
                                 </button>
-                                :
-                                <button style={{ margin: "10px" }} className="btn waves-effect waves-light #64b5f6 blue darken-1" onClick={() => unfollowUser()}>
-                                    Unfollow
-                                </button>}
+                            </div>
                         </div>
                         <div style={{ width: '40%', minWidth: '250px' }}>
                             <h4>{userProfile.user.name}</h4>

@@ -81,7 +81,7 @@ const Ratings = () => {
                         </ul>
                     </div>
                     <div id="test1" className="col s12">
-                        <table class="tg">
+                        <table className="tg">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -113,7 +113,7 @@ const Ratings = () => {
                         </table>
                     </div>
                     <div id="test2" className="col s12">
-                        <table class="tg">
+                        <table className="tg">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -145,7 +145,7 @@ const Ratings = () => {
                         </table>
                     </div>
                     <div id="test3" className="col s12">
-                        <table class="tg">
+                        <table className="tg">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -177,7 +177,7 @@ const Ratings = () => {
                         </table>
                     </div>
                     <div id="test4" className="col s12">
-                        <table class="tg">
+                        <table className="tg">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -209,7 +209,7 @@ const Ratings = () => {
                         </table>
                     </div>
                     <div id="test5" className="col s12">
-                        <table class="tg">
+                        <table className="tg">
                             <thead>
                                 <tr>
                                     <th>Name</th>

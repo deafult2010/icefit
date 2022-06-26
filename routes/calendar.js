@@ -41,6 +41,10 @@ router.post('/create-event', requireLogin, (req, res) => {
 // })
 
 router.get('/get-events', requireLogin, (req, res) => {
+    if (!req.query.start) {
+        req.query.start = '2022-01-01T23:00:00.000Z'
+        req.query.end = '2099-01-01T23:00:00.000Z'
+    }
     Event.find({
         start: { $gte: moment(req.query.start).toDate() },
         end: { $lte: moment(req.query.end).toDate() }

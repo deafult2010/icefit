@@ -2,13 +2,16 @@ import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../App'
 import Alert from "sweetalert2";
 import M from 'materialize-css'
-
+import AddCreditsModal from './AddCreditsModal'
+import CreditsHistoryModal from './CreditsHistoryModal'
+import axios from 'axios'
 
 const Profile = () => {
 
     const [mypics, setPics] = useState([])
     const { state, dispatch } = useContext(UserContext)
     const [image, setImage] = useState("")
+    const [played, setPlayed] = useState([])
     const [matches, setMatches] = useState(
         window.matchMedia("(min-width: 700px)").matches
     )
@@ -19,6 +22,25 @@ const Profile = () => {
             .addEventListener('change', e => setMatches(e.matches));
     }, []);
 
+
+    useEffect(() => {
+        axios.get('/get-events', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then((response) => {
+            let i = 0
+            response.data.map(item => {
+                item.attending.map(element => {
+                    if (element._id === state._id) {
+                        i += 1
+                    }
+                })
+            })
+            setPlayed(i)
+        })
+    }, [state]);
+
     useEffect(() => {
         fetch("/mypost", {
             headers: {
@@ -27,7 +49,6 @@ const Profile = () => {
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result)
                 setPics(result.mypost)
             })
             .catch(err => {
@@ -73,46 +94,43 @@ const Profile = () => {
     }
 
 
-
     const editEmail = () => {
         Alert.fire({
             title: 'Change Email:',
-            // input: 'text',
             html:
                 '<input id="swal-input1" className="swal2-input">',
 
             showCancelButton: true,
-            // showDenyButton: false,
             showConfirmButton: true,
             cancelButtonColor: "#3085d6",
             confirmButtonColor: "#d33",
-            confirmButtonText: "Remove Event",
             cancelButtonText: "Close",
             confirmButtonText: "Change",
-            // showLoaderOnDeny: true,
         }).then(result => {
-            console.log(state)
+            if (result.isConfirmed === false) {
+                return
+            }
             if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(document.getElementById('swal-input1').value)) {
                 M.toast({ html: "invalid email", classes: "#c62828 red darken-3" })
                 return
             }
-            result.isConfirmed === true &&
+            if (result.isConfirmed === true) {
                 console.log(result)
-            console.log()
-            fetch('/updateemail', {
-                method: "put",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
-                },
-                body: JSON.stringify({
-                    email: document.getElementById('swal-input1').value
-                })
-            }).then(res => res.json())
-                .then(result => {
-                    localStorage.setItem("user", JSON.stringify({ ...state, email: result.email }))
-                    dispatch({ type: "UPDATEEMAIL", payload: result.email })
-                })
+                fetch('/updateemail', {
+                    method: "put",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
+                    },
+                    body: JSON.stringify({
+                        email: document.getElementById('swal-input1').value
+                    })
+                }).then(res => res.json())
+                    .then(result => {
+                        localStorage.setItem("user", JSON.stringify({ ...state, email: result.email }))
+                        dispatch({ type: "UPDATEEMAIL", payload: result.email })
+                    })
+            }
         });
     };
 
@@ -145,16 +163,27 @@ const Profile = () => {
                     </div>
                     <div style={{ width: '30%', minWidth: '250px' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ display: 'flex', justifyContent: 'right', fontSize: '20px' }}>credits</div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ fontSize: '30px' }}>{state ? state.name : "loading"}</div>
-                                <div style={{ fontSize: '30px', backgroundColor: '#f5ce22', padding: '0 10px 0 10px' }}><span className="material-icons">stars</span>{state ? state.credits : "loading"}</div>
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <div style={{ fontSize: '30px', marginTop: '20px' }}>{state ? state.name : "loading"}</div>
+                                <h5 style={{ marginTop: '30px' }}>Credits</h5>
+
+
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', fontSize: '20px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'right', fontSize: '20px' }}>
+                                    <div style={{ fontSize: '30px', backgroundColor: '#f5ce22', padding: '0 10px 0 10px', width: '145px', textAlign: 'center' }}><span className="material-icons">stars</span>{state ? state.credits - played : "loading"}</div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'right', fontSize: '20px' }}>
+                                    <button data-target="modal2" className="modal-trigger btn-small #43a047 green darken-2">Add</button>
+                                    {/* <button  className="" style={{ marginTop: "20px" }}>Add Event</button> */}
+                                    <button data-target="modal3" className="modal-trigger btn-small #43a047 green darken-2">History</button>
+                                </div>
                             </div>
 
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <h5>{state ? state.email : "loading"}</h5>
-                            <button className="btn #64b5f6 blue darken-1" onClick={() => editEmail()}>Edit</button>
+                            <button className="btn-small #64b5f6 blue darken-1" onClick={() => editEmail()}>Edit</button>
                         </div>
                         <div style={{ display: "flex", gap: '20px' }}>
                             <h6>{mypics.length} posts</h6>
@@ -212,6 +241,8 @@ const Profile = () => {
                     })
                 }
             </div>
+            <AddCreditsModal />
+            <CreditsHistoryModal />
         </div>
     )
 }

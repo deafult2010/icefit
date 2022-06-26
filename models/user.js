@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
     },
     credits: {
         type: Number,
-        default: 0
+        default: 1
     },
     admin: {
         type: Boolean,

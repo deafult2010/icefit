@@ -62,3 +62,31 @@ h2 {
 .fc-event {
   cursor: pointer;
 }
+
+.pill-Red {
+  background-color: #f00;
+}
+
+.pill-Orange {
+  background-color: #fa0;
+}
+
+.pill-Yellow {
+  background-color: #ff0;
+}
+
+.pill-Green {
+  background-color: #0f0;
+}
+
+.pill-Blue {
+  background-color: #0af;
+}
+
+.pill-Purple {
+  background-color: #a0f;
+}
+
+.pill-Pink {
+  background-color: #f0a;
+}
