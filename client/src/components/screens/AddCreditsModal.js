@@ -59,11 +59,17 @@ const AddCreditsModal = () => {
                             <h3>Add Credits</h3>
                             <div style={{ display: 'flex', fontSize: '20px' }}>
                                 <div>
-                                    <button className="btn #64b5f6 blue darken-1" type="button" onClick={decNum}>-</button>
+                                    {credits === 0
+                                        ? <button className="btn #64b5f6 blue darken-1" type="button" onClick={decNum} disabled>-</button>
+                                        : <button className="btn #64b5f6 blue darken-1" type="button" onClick={decNum}>-</button>
+                                    }
                                 </div>
                                 <input type="text" className="form-control" style={{ width: '30px', pointerEvents: 'none', border: 'solid', textAlign: 'center', height: '30px' }} value={credits} onChange={(e) => { setCredits(e.target.value) }} />
                                 <div>
-                                    <button className="btn #64b5f6 blue darken-1" type="button" onClick={incNum}>+</button>
+                                    {credits === 10
+                                        ? <button className="btn #64b5f6 blue darken-1" type="button" onClick={incNum} disabled>+</button>
+                                        : <button className="btn #64b5f6 blue darken-1" type="button" onClick={incNum}>+</button>
+                                    }
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;Cost: £{credits * 2.00}.00

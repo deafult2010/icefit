@@ -163,19 +163,23 @@ const Profile = () => {
                     </div>
                     <div style={{ width: '30%', minWidth: '250px' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div style={{ fontSize: '30px', marginTop: '20px' }}>{state ? state.name : "loading"}</div>
-                                <h5 style={{ marginTop: '30px' }}>Credits</h5>
+                                <div></div>
 
 
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', fontSize: '20px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'right', fontSize: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '20px' }}>
+                                <div></div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+                                    <div>                                <h5 style={{ marginBottom: '0px' }}>Credits:</h5></div>
                                     <div style={{ fontSize: '30px', backgroundColor: '#f5ce22', padding: '0 10px 0 10px', width: '145px', textAlign: 'center' }}><span className="material-icons">stars</span>{state ? state.credits - played : "loading"}</div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'right', fontSize: '20px' }}>
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '20px' }}>
+                                <div></div>
+                                <div>
                                     <button data-target="modal2" className="modal-trigger btn-small #43a047 green darken-2">Add</button>
-                                    {/* <button  className="" style={{ marginTop: "20px" }}>Add Event</button> */}
                                     <button data-target="modal3" className="modal-trigger btn-small #43a047 green darken-2">History</button>
                                 </div>
                             </div>
@@ -242,7 +246,7 @@ const Profile = () => {
                 }
             </div>
             <AddCreditsModal />
-            <CreditsHistoryModal />
+            <CreditsHistoryModal played={played} />
         </div>
     )
 }

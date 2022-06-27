@@ -8,7 +8,7 @@ import AddEventModal from './AddEventModal'
 import axios from 'axios'
 import moment from 'moment'
 import M from 'materialize-css'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 const Calendar = () => {
 
@@ -16,19 +16,23 @@ const Calendar = () => {
     const [events, setEvents] = useState([])
     const calendarRef = useRef(null)
     const { hash } = useLocation();
+    const navigate = useNavigate()
+
     // console.log(events)
 
     useEffect(() => {
         const calendarApi = calendarRef.current.getApi()
         const data = calendarApi.getEvents()
-        data.map(item => {
-            if (item._def.extendedProps._id === hash.substring(1)) {
-                console.log(item)
-                const e = new Object();
-                e.event = item;
-                eventClick(e)
-            }
-        })
+        if (events.length > 0) {
+            data.map(item => {
+                if (item._def.extendedProps._id === hash.substring(1)) {
+                    console.log(item)
+                    const e = new Object();
+                    e.event = item;
+                    eventClick(e)
+                }
+            })
+        }
     }, [events])
 
     const onEventAdded = event => {
@@ -200,21 +204,64 @@ const Calendar = () => {
           </strong></td>
           </tr>
           <tr >
+          <td>Rated</td>
+          <td><strong>` +
+                `No` +
+                `
+          </strong></td>
+          </tr>
+          <tr >
           <td>Attending</td>
-          <td><strong>
+          <td colspan="2"><strong>
+          <p style="height: 1px"/>
           ` +
                 e.event.extendedProps.attending.map(item => {
                     return (
-                        "<a href='https://icefit.herokuapp.com/profile/" + item._id + "'>" + item.name + "</a>"
+                        `<li style="height: 24px"><a href='https://icefit.herokuapp.com/profile/` + item._id + "'>" + item.name + `</a></li>`
                     )
-                }) +
+                }).join(' ') +
                 // <a href='https://icefit.herokuapp.com/profile/${item._id}' >item.name</a>
                 // <Link to={record.postedBy._id !== state._id ? "/profile/" + record.postedBy._id : "/profile"} >{record.postedBy.name}</Link>
                 `
           </strong></td>
+          <td  style="padding: 0px">
+                <ul style={{listStyle: 'none'}}>W &nbsp;&nbsp;&nbsp;&nbsp;  L
+                ` +
+                e.event.extendedProps.attending.map(item => {
+                    return (
+                        `
+                        <li >
+                        <label >
+                            <input style={{
+                                color: "#000000"
+                            }} type="checkbox" className="filled-in" disabled=true />
+                            <span style={{height: "0px !important"}} > </span>
+                        </label>
+                        
+                        <label >
+                            <input style={{
+                                color: "#000000"
+                            }} type="checkbox" className="filled-in" disabled=true />
+                            <span style={{height: "0px !important"}} > </span>
+                        </label>
+                        </li>
+                        
+                        `
+                    )
+                }).join(' ') +
+                // <a href='https://icefit.herokuapp.com/profile/${item._id}' >item.name</a>
+                // <Link to={record.postedBy._id !== state._id ? "/profile/" + record.postedBy._id : "/profile"} >{record.postedBy.name}</Link>
+                `
+                </ul>
+          </td>
           </tr>
           </tbody>
           </table>
+          <label >
+          <input style={{
+              color: "#000000"
+          }} type="checkbox" className="filled-in" checked=true />
+      </label>
           </div>`,
 
             showCancelButton: true,
@@ -241,6 +288,7 @@ const Calendar = () => {
             } else if (result.isDenied) {
                 console.log('123')
             }
+            navigate('/bookings')
         });
     };
 

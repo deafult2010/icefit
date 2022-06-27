@@ -26,7 +26,9 @@ router.post('/signup', (req, res) => {
     if (!email || !password || !name) {
         return res.status(422).json({ error: "please add all the fields" })
     }
-    User.findOne({ email: email })
+    let userPattern = new RegExp(email, 'i')
+    User.findOne({ email: { $regex: userPattern } })
+        // User.findOne({ email: email })
         .then((savedUser) => {
             if (savedUser) {
                 return res.status(422).json({ error: "user already exists with that email" })
@@ -68,7 +70,8 @@ router.post('/signin', (req, res) => {
     if (!email || !password) {
         return res.status(422).json({ error: "please add email or password" })
     }
-    User.findOne({ email: email })
+    let userPattern = new RegExp(email, 'i')
+    User.findOne({ email: { $regex: userPattern } })
         .then(savedUser => {
             if (!savedUser) {
                 return res.status(422).json({ error: "Invalid email or password" })
@@ -98,7 +101,9 @@ router.post('/reset-password', (req, res) => {
             console.log(err)
         }
         const token = buffer.toString("hex")
-        User.findOne({ email: req.body.email })
+        let userPattern = new RegExp(req.body.email, 'i')
+        User.findOne({ email: { $regex: userPattern } })
+            // User.findOne({ email: req.body.email })
             .then(user => {
                 if (!user) {
                     return res.status(422).json({ error: "User does not exist with that email" })
