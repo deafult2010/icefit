@@ -25,7 +25,13 @@ const eventSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User"
     },
-    attending: [{ type: ObjectId, ref: "User" }]
+    winners: [{ type: ObjectId, ref: "User" }],
+    losers: [{ type: ObjectId, ref: "User" }],
+    attending: [{ type: ObjectId, ref: "User" }],
+    eventCost: {
+        type: Number,
+        default: 1
+    }
 })
 
 mongoose.model("Event", eventSchema)

@@ -104,11 +104,27 @@ router.post('/search-names', (req, res) => {
 })
 
 router.put('/add-credits', requireLogin, (req, res) => {
-    console.log(req.user._id)
-    console.log(req.body.credits)
     User.findByIdAndUpdate(req.user._id, { $set: { credits: req.body.credits } }, { new: true }, (err, result) => {
         if (err) {
             return res.status(422).json({ error: "credits cannot update" })
+        }
+        res.json(result)
+    })
+})
+
+router.put('/updateRating', requireLogin, (req, res) => {
+    console.log(req.body.player)
+    console.log(req.user)
+    User.findByIdAndUpdate(req.body.player._id, {
+        $set: {
+            badmintonRating: req.body.player.badmintonRating,
+            tennisRating: req.body.player.tennisRating,
+            tableTennisRating: req.body.player.tableTennisRating,
+            chessRating: req.body.player.chessRating,
+        }
+    }, { new: true }, (err, result) => {
+        if (err) {
+            return res.status(422).json({ error: "ratings cannot update" })
         }
         res.json(result)
     })

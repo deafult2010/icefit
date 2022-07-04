@@ -43,21 +43,23 @@ const CreditsHistoryModal = ({ played }) => {
                                 <h4>Events Played</h4>
                                 {
                                     events.sort((a, b) => new Date(a.start) - new Date(b.start)).map(item => {
-                                        return (
-                                            <div>{item.attending.map(element => {
-                                                // element._id === state._id && console.log(item)
-                                                return (
-                                                    <div>{element._id === state._id &&
-                                                        <a href={'/bookings#' + item._id}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                <div>{item.title} </div>
-                                                                <div style={{ color: '#aaa' }}> - {moment(item.start).format('ll')}</div>
-                                                            </div>
-                                                        </a>}</div>
-                                                )
-                                            })}</div>
-                                        )
-
+                                        if (moment(item.start).valueOf() < Date.now()) {
+                                            return (
+                                                <div>{
+                                                    item.attending.map(element => {
+                                                        // element._id === state._id && console.log(item)
+                                                        return (
+                                                            <div>{element._id === state._id &&
+                                                                <a href={'/bookings#' + item._id}>
+                                                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                        <div>{item.title} </div>
+                                                                        <div style={{ color: '#aaa' }}> - {moment(item.start).format('ll')}</div>
+                                                                    </div>
+                                                                </a>}</div>
+                                                        )
+                                                    })}</div>
+                                            )
+                                        }
                                     })}
                                 {/* {events} */}
                             </div>

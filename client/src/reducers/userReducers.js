@@ -32,5 +32,14 @@ export const reducer = (state, action) => {
             credits: action.payload
         }
     }
+    if (action.type === "UPDATERATING") {
+        return {
+            ...state,
+            badmintonRating: action.payload.badmintonRating,
+            tennisRating: action.payload.tennisRating,
+            tableTennisRating: action.payload.tableTennisRating,
+            chessRating: action.payload.chessRating
+        }
+    }
     return state
 }

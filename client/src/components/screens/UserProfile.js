@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../App'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import moment from 'moment'
 
 const Profile = () => {
 
@@ -8,6 +10,15 @@ const Profile = () => {
     const { state, dispatch } = useContext(UserContext)
     const { userid } = useParams()
     const [showfollow, setShowFollow] = useState(state ? !state.following.includes(userid) : true)
+    const [played, setPlayed] = useState([])
+    const [tennisPlayed, setTennisPlayed] = useState([])
+    const [tableTennisPlayed, setTableTennisPlayed] = useState([])
+    const [badmintonPlayed, setBadmintonPlayed] = useState([])
+    const [chessPlayed, setChessPlayed] = useState([])
+    const [tennisRatedPlayed, setTennisRatedPlayed] = useState([])
+    const [tableTennisRatedPlayed, setTableTennisRatedPlayed] = useState([])
+    const [badmintonRatedPlayed, setBadmintonRatedPlayed] = useState([])
+    const [chessRatedPlayed, setChessRatedPlayed] = useState([])
     const [matches, setMatches] = useState(
         window.matchMedia("(min-width: 700px)").matches
     )
@@ -33,6 +44,128 @@ const Profile = () => {
             })
         // eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        axios.get('/get-events', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then((response) => {
+            console.log(response)
+            console.log(userProfile)
+            let i = 0
+            let j = 0
+            response.data.forEach(item => {
+                if (moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === userProfile.user._id) {
+                            i += 1
+                        }
+                    })
+                }
+            })
+            setPlayed(i)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Tennis' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === userProfile.user._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setTennisPlayed(i)
+            setTennisRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Table Tennis' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === userProfile.user._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setTableTennisPlayed(i)
+            setTableTennisRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Badminton' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === userProfile.user._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                    console.log('123123')
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                    console.log('cyacya')
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setBadmintonPlayed(i)
+            setBadmintonRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Chess' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === userProfile.user._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === userProfile.user._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setChessPlayed(i)
+            setChessRatedPlayed(j)
+        })
+    }, [userProfile]);
+
+    // console.log(tennisPlayed + 'tennis played')
+    // console.log(badmintonPlayed + 'badminton played')
+    // console.log(tableTennisPlayed + 'table tennis played')
+    // console.log(chessPlayed + 'chess played')
 
     const followUser = () => {
         fetch('/follow', {
@@ -144,26 +277,26 @@ const Profile = () => {
                                     <tr>
                                         <td style={{ padding: '5px' }}>Tennis</td>
                                         <td style={{ padding: '5px' }}>{userProfile.user.tennisRating}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.tennisGamesPlayed}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.tennisRatedGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{tennisPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{tennisRatedPlayed}</td>
                                     </tr>
                                     <tr>
                                         <td style={{ padding: '5px' }}>Badminton</td>
                                         <td style={{ padding: '5px' }}>{userProfile.user.badmintonRating}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.badmintonGamesPlayed}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.badmintonRatedGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{badmintonPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{badmintonRatedPlayed}</td>
                                     </tr>
                                     <tr>
                                         <td style={{ padding: '5px' }}>Table Tennis</td>
                                         <td style={{ padding: '5px' }}>{userProfile.user.tableTennisRating}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.tableTennisGamesPlayed}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.tableTennisRatedGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{tableTennisPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{tableTennisRatedPlayed}</td>
                                     </tr>
                                     <tr>
                                         <td style={{ padding: '5px' }}>Chess</td>
                                         <td style={{ padding: '5px' }}>{userProfile.user.chessRating}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.chessGamesPlayed}</td>
-                                        <td style={{ padding: '5px' }}>{userProfile.user.chessRatedGamesPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{chessPlayed}</td>
+                                        <td style={{ padding: '5px' }}>{chessRatedPlayed}</td>
                                     </tr>
                                 </tbody>
                             </table>

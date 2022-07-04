@@ -37,38 +37,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 1200
     },
-    badmintonGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    badmintonRatedGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    tennisGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    tennisRatedGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    tableTennisGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    tableTennisRatedGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    chessGamesPlayed: {
-        type: Number,
-        default: 0
-    },
-    chessRatedGamesPlayed: {
-        type: Number,
-        default: 0
-    },
     credits: {
         type: Number,
         default: 1

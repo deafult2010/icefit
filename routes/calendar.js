@@ -115,5 +115,22 @@ router.put('/unattend-event', requireLogin, (req, res) => {
         )
 })
 
+router.put('/updateEvent', requireLogin, (req, res) => {
+    Event.findByIdAndUpdate(req.body.event.extendedProps._id, {
+        $set: { winners: req.body.winners, losers: req.body.losers }
+    }, {
+        new: true
+    })
+        .populate('attending', 'name')
+        .populate('user', 'name')
+        .exec((err, result) => {
+            if (err) {
+                return res.status(422).json({ error: err })
+            } else {
+                res.json(result)
+            }
+        }
+        )
+})
 
 module.exports = router

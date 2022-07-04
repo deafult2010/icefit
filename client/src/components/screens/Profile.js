@@ -5,6 +5,7 @@ import M from 'materialize-css'
 import AddCreditsModal from './AddCreditsModal'
 import CreditsHistoryModal from './CreditsHistoryModal'
 import axios from 'axios'
+import moment from 'moment'
 
 const Profile = () => {
 
@@ -12,6 +13,14 @@ const Profile = () => {
     const { state, dispatch } = useContext(UserContext)
     const [image, setImage] = useState("")
     const [played, setPlayed] = useState([])
+    const [tennisPlayed, setTennisPlayed] = useState([])
+    const [tableTennisPlayed, setTableTennisPlayed] = useState([])
+    const [badmintonPlayed, setBadmintonPlayed] = useState([])
+    const [chessPlayed, setChessPlayed] = useState([])
+    const [tennisRatedPlayed, setTennisRatedPlayed] = useState([])
+    const [tableTennisRatedPlayed, setTableTennisRatedPlayed] = useState([])
+    const [badmintonRatedPlayed, setBadmintonRatedPlayed] = useState([])
+    const [chessRatedPlayed, setChessRatedPlayed] = useState([])
     const [matches, setMatches] = useState(
         window.matchMedia("(min-width: 700px)").matches
     )
@@ -30,16 +39,118 @@ const Profile = () => {
             }
         }).then((response) => {
             let i = 0
-            response.data.map(item => {
-                item.attending.map(element => {
-                    if (element._id === state._id) {
-                        i += 1
-                    }
-                })
+            let j = 0
+            response.data.forEach(item => {
+                if (moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === state._id) {
+                            i += 1
+                        }
+                    })
+                }
             })
             setPlayed(i)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                console.log(item.start)
+                console.log(Date.now())
+                if (item.title === 'Tennis' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === state._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setTennisPlayed(i)
+            setTennisRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Table Tennis' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === state._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setTableTennisPlayed(i)
+            setTableTennisRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Badminton' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === state._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setBadmintonPlayed(i)
+            setBadmintonRatedPlayed(j)
+            i = 0
+            j = 0
+            response.data.forEach(item => {
+                if (item.title === 'Chess' & moment(item.start).valueOf() < Date.now()) {
+                    item.attending.forEach(element => {
+                        if (element._id === state._id) {
+                            i += 1
+                            item.winners.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                            item.losers.forEach(el => {
+                                if (el === element._id) {
+                                    j += 1
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            setChessPlayed(i)
+            setChessRatedPlayed(j)
         })
     }, [state]);
+
+    // console.log(tennisPlayed + 'tennis played')
+    // console.log(badmintonPlayed + 'badminton played')
+    // console.log(tableTennisPlayed + 'table tennis played')
+    // console.log(chessPlayed + 'chess played')
 
     useEffect(() => {
         fetch("/mypost", {
@@ -87,6 +198,7 @@ const Profile = () => {
                     console.log(err)
                 })
         }
+        // eslint-disable-next-line
     }, [image])
 
     const updatePhoto = (file) => {
@@ -207,26 +319,26 @@ const Profile = () => {
                                 <tr>
                                     <td style={{ padding: '5px' }}>Tennis</td>
                                     <td style={{ padding: '5px' }}>{state ? state.tennisRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.tennisGamesPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.tennisRatedGamesPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tennisPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tennisRatedPlayed : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Badminton</td>
                                     <td style={{ padding: '5px' }}>{state ? state.badmintonRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.badmintonGamesPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.badmintonRatedGamesPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? badmintonPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? badmintonRatedPlayed : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Table Tennis</td>
                                     <td style={{ padding: '5px' }}>{state ? state.tableTennisRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.tableTennisGamesPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.tableTennisRatedGamesPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tableTennisPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tableTennisRatedPlayed : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Chess</td>
                                     <td style={{ padding: '5px' }}>{state ? state.chessRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.chessGamesPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? state.chessRatedGamesPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? chessPlayed : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? chessRatedPlayed : 0}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { UserContext } from '../../App'
 import M from 'materialize-css'
+import axios from 'axios'
+import moment from 'moment'
 
 const Ratings = () => {
 
@@ -11,14 +13,26 @@ const Ratings = () => {
     const [searchEmail, setSearchEmail] = useState('');
     const [searchName, setSearchName] = useState('');
     const [userDetails, setUserDetails] = useState([])
+    const [events, setEvents] = useState([])
     const { state, dispatch } = useContext(UserContext)
 
     const navigate = useNavigate()
 
     useEffect(() => {
         M.Tabs.init(searchTabs.current);
-        fetchUsers('')
+        axios.get('/get-events', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then((response) => {
+            setEvents(response.data)
+
+        })
     }, [])
+
+    useEffect(() => {
+        fetchUsers('')
+    }, [events])
 
     const fetchUsers = (query) => {
         setSearchEmail(query)
@@ -32,6 +46,54 @@ const Ratings = () => {
             })
         }).then(res => res.json())
             .then(results => {
+                // Add games data:
+                results.user.map(item => {
+                    let i = 0
+                    let user = item
+                    events.map(item => {
+                        if (item.title === 'Tennis' & moment(item.start).valueOf() < Date.now()) {
+                            item.attending.map(element => {
+                                if (element._id === user._id) {
+                                    i += 1
+                                }
+                            })
+                        }
+                    })
+                    item.tennisGamesPlayed = i
+                    i = 0
+                    events.map(item => {
+                        if (item.title === 'Table Tennis' & moment(item.start).valueOf() < Date.now()) {
+                            item.attending.map(element => {
+                                if (element._id === user._id) {
+                                    i += 1
+                                }
+                            })
+                        }
+                    })
+                    item.tableTennisGamesPlayed = i
+                    i = 0
+                    events.map(item => {
+                        if (item.title === 'Badminton' & moment(item.start).valueOf() < Date.now()) {
+                            item.attending.map(element => {
+                                if (element._id === user._id) {
+                                    i += 1
+                                }
+                            })
+                        }
+                    })
+                    item.badmintonGamesPlayed = i
+                    i = 0
+                    events.map(item => {
+                        if (item.title === 'Chess' & moment(item.start).valueOf() < Date.now()) {
+                            item.attending.map(element => {
+                                if (element._id === user._id) {
+                                    i += 1
+                                }
+                            })
+                        }
+                    })
+                    item.chessGamesPlayed = i
+                })
                 setUserDetails(results.user)
             })
     }
