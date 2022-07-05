@@ -279,6 +279,8 @@ const Calendar = () => {
 
     const eventClick = (e) => {
         const today = new Date().getTime()
+        let rated = 'No'
+        if (e.event.extendedProps.winners.length + e.event.extendedProps.winners.length > 0) { rated = 'Yes' }
         Alert.fire({
             title: e.event.title,
             html:
@@ -341,10 +343,7 @@ const Calendar = () => {
           </tr>
           <tr >
           <td>Rated</td>
-          <td><strong>` +
-                `No` +
-                `
-          </strong></td>
+          <td><strong>${rated}</strong></td>
           </tr>
           <tr >
           <td>Attending</td>
