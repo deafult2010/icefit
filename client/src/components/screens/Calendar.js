@@ -366,6 +366,9 @@ const Calendar = () => {
                 e.event.extendedProps.attending.map(item => {
                     console.log(e.event)
                     let rating = null
+                    let win = ''
+                    let lose = ''
+                    console.log(e.event.title)
                     if (e.event.title === "Badminton") {
                         rating = users.user.find(el => el._id === item._id).badmintonRating
                     } else if (e.event.title === "Tennis") {
@@ -375,6 +378,12 @@ const Calendar = () => {
                     } else if (e.event.title === "Chess") {
                         rating = users.user.find(el => el._id === item._id).chessRating
                     }
+                    if (e.event.extendedProps.winners.find(el => el === item._id)) {
+                        win = 'checked="checked"'
+                    }
+                    if (e.event.extendedProps.losers.find(el => el === item._id)) {
+                        lose = 'checked="checked"'
+                    }
                     if (state._id === e.event.extendedProps.user._id & moment(e.event.start).valueOf() < Date.now()) {
 
                         return (
@@ -382,27 +391,12 @@ const Calendar = () => {
                         <li >
                         <label style="text-align: center; line-height: 150%; font-size: 1em; vertical-align: top;" >`+ rating + `&nbsp;&nbsp;</label>
                         <label for="${item._id}WCB">
-                        <input style="color: #000000;" type="checkbox" class="filled-in" value="" id="${item._id}WCB"`
-                            + e.event.extendedProps.winners.map(el => {
-                                if (el === item._id) {
-                                    console.log('123')
-                                    return (`checked="checked"`)
-                                }
-                                return null
-                            })
-                            + `/>
+                        <input style="color: #000000;" type="checkbox" class="filled-in" value="" id="${item._id}WCB" ${win}/>
                             <span style={{height: "0px !important"}} > </span>
                         </label>
                         
                         <label for="${item._id}LCB">
-                        <input style="color: #000000;" type="checkbox" class="filled-in" value="" id="${item._id}LCB"`
-                            + e.event.extendedProps.losers.map(el => {
-                                if (el === item._id) {
-                                    return (`checked="checked"`)
-                                }
-                                return null
-                            })
-                            + `/>
+                        <input style="color: #000000;" type="checkbox" class="filled-in" value="" id="${item._id}LCB" ${lose}/>
                             <span style={{height: "0px !important"}} > </span>
                         </label>
                         </li>
@@ -417,28 +411,14 @@ const Calendar = () => {
                                 <label >
                                     <input style={{
                                         color: "#000000"
-                                    }} type="checkbox" class="filled-in" `
-                            + e.event.extendedProps.winners.map(el => {
-                                if (el === item._id) {
-                                    return (`checked="checked"`)
-                                }
-                                return null
-                            })
-                            + ` disabled=true />
+                                    }} type="checkbox" class="filled-in" ${win} disabled=true />
                                     <span style={{height: "0px !important"}} > </span>
                                 </label>
                                 
                                 <label >
                                     <input style={{
                                         color: "#000000"
-                                    }} type="checkbox" class="filled-in" `
-                            + e.event.extendedProps.losers.map(el => {
-                                if (el === item._id) {
-                                    return (`checked="checked"`)
-                                }
-                                return null
-                            })
-                            + ` disabled=true />
+                                    }} type="checkbox" class="filled-in" ${lose} disabled=true />
                                     <span style={{height: "0px !important"}} > </span>
                                 </label>
                                 </li>
