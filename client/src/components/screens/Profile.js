@@ -21,6 +21,14 @@ const Profile = () => {
     const [tableTennisRatedPlayed, setTableTennisRatedPlayed] = useState([])
     const [badmintonRatedPlayed, setBadmintonRatedPlayed] = useState([])
     const [chessRatedPlayed, setChessRatedPlayed] = useState([])
+    const [tennisWins, setTennisWins] = useState([])
+    const [tableTennisWins, setTableTennisWins] = useState([])
+    const [badmintonWins, setBadmintonWins] = useState([])
+    const [chessWins, setChessWins] = useState([])
+    const [tennisLosses, setTennisLosses] = useState([])
+    const [tableTennisLosses, setTableTennisLosses] = useState([])
+    const [badmintonLosses, setBadmintonLosses] = useState([])
+    const [chessLosses, setChessLosses] = useState([])
     const [matches, setMatches] = useState(
         window.matchMedia("(min-width: 700px)").matches
     )
@@ -40,6 +48,7 @@ const Profile = () => {
         }).then((response) => {
             let i = 0
             let j = 0
+            let k = 0
             response.data.forEach(item => {
                 if (moment(item.start).valueOf() < Date.now()) {
                     item.attending.forEach(element => {
@@ -52,6 +61,7 @@ const Profile = () => {
             setPlayed(i)
             i = 0
             j = 0
+            k = 0
             response.data.forEach(item => {
                 console.log(item.start)
                 console.log(Date.now())
@@ -66,7 +76,7 @@ const Profile = () => {
                             })
                             item.losers.forEach(el => {
                                 if (el === element._id) {
-                                    j += 1
+                                    k += 1
                                 }
                             })
                         }
@@ -74,9 +84,12 @@ const Profile = () => {
                 }
             })
             setTennisPlayed(i)
-            setTennisRatedPlayed(j)
+            setTennisRatedPlayed(j + k)
+            setTennisWins(j)
+            setTennisLosses(k)
             i = 0
             j = 0
+            k = 0
             response.data.forEach(item => {
                 if (item.title === 'Table Tennis' & moment(item.start).valueOf() < Date.now()) {
                     item.attending.forEach(element => {
@@ -89,7 +102,7 @@ const Profile = () => {
                             })
                             item.losers.forEach(el => {
                                 if (el === element._id) {
-                                    j += 1
+                                    k += 1
                                 }
                             })
                         }
@@ -97,9 +110,12 @@ const Profile = () => {
                 }
             })
             setTableTennisPlayed(i)
-            setTableTennisRatedPlayed(j)
+            setTableTennisRatedPlayed(j + k)
+            setTableTennisWins(j)
+            setTableTennisLosses(k)
             i = 0
             j = 0
+            k = 0
             response.data.forEach(item => {
                 if (item.title === 'Badminton' & moment(item.start).valueOf() < Date.now()) {
                     item.attending.forEach(element => {
@@ -112,7 +128,7 @@ const Profile = () => {
                             })
                             item.losers.forEach(el => {
                                 if (el === element._id) {
-                                    j += 1
+                                    k += 1
                                 }
                             })
                         }
@@ -120,9 +136,12 @@ const Profile = () => {
                 }
             })
             setBadmintonPlayed(i)
-            setBadmintonRatedPlayed(j)
+            setBadmintonRatedPlayed(j + k)
+            setBadmintonWins(j)
+            setBadmintonLosses(k)
             i = 0
             j = 0
+            k = 0
             response.data.forEach(item => {
                 if (item.title === 'Chess' & moment(item.start).valueOf() < Date.now()) {
                     item.attending.forEach(element => {
@@ -135,7 +154,7 @@ const Profile = () => {
                             })
                             item.losers.forEach(el => {
                                 if (el === element._id) {
-                                    j += 1
+                                    k += 1
                                 }
                             })
                         }
@@ -143,7 +162,9 @@ const Profile = () => {
                 }
             })
             setChessPlayed(i)
-            setChessRatedPlayed(j)
+            setChessRatedPlayed(j + k)
+            setChessWins(j)
+            setChessLosses(k)
         })
     }, [state]);
 
@@ -311,34 +332,44 @@ const Profile = () => {
                                 <tr>
                                     <th style={{ padding: '5px' }}>Game</th>
                                     <th style={{ padding: '5px' }}>Rating</th>
-                                    <th style={{ padding: '5px' }}>Played</th>
-                                    <th style={{ padding: '5px' }}>Rated</th>
+                                    <th style={{ padding: '5px', textAlign: 'center' }}>Played</th>
+                                    {/* <th style={{ padding: '5px' }}>Rated</th> */}
+                                    <th style={{ padding: '5px' }}>Won</th>
+                                    <th style={{ padding: '5px' }}>Lost</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Tennis</td>
                                     <td style={{ padding: '5px' }}>{state ? state.tennisRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? tennisPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? tennisRatedPlayed : 0}</td>
+                                    <td style={{ padding: '5px', textAlign: 'center' }}>{state ? tennisPlayed : 0}</td>
+                                    {/* <td style={{ padding: '5px' }}>{state ? tennisRatedPlayed : 0}</td> */}
+                                    <td style={{ padding: '5px' }}>{state ? tennisWins : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tennisLosses : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Badminton</td>
                                     <td style={{ padding: '5px' }}>{state ? state.badmintonRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? badmintonPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? badmintonRatedPlayed : 0}</td>
+                                    <td style={{ padding: '5px', textAlign: 'center' }}>{state ? badmintonPlayed : 0}</td>
+                                    {/* <td style={{ padding: '5px' }}>{state ? badmintonRatedPlayed : 0}</td> */}
+                                    <td style={{ padding: '5px' }}>{state ? badmintonWins : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? badmintonLosses : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Table Tennis</td>
                                     <td style={{ padding: '5px' }}>{state ? state.tableTennisRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? tableTennisPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? tableTennisRatedPlayed : 0}</td>
+                                    <td style={{ padding: '5px', textAlign: 'center' }}>{state ? tableTennisPlayed : 0}</td>
+                                    {/* <td style={{ padding: '5px' }}>{state ? tableTennisRatedPlayed : 0}</td> */}
+                                    <td style={{ padding: '5px' }}>{state ? tableTennisWins : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? tableTennisLosses : 0}</td>
                                 </tr>
                                 <tr>
                                     <td style={{ padding: '5px' }}>Chess</td>
                                     <td style={{ padding: '5px' }}>{state ? state.chessRating : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? chessPlayed : 0}</td>
-                                    <td style={{ padding: '5px' }}>{state ? chessRatedPlayed : 0}</td>
+                                    <td style={{ padding: '5px', textAlign: 'center' }}>{state ? chessPlayed : 0}</td>
+                                    {/* <td style={{ padding: '5px' }}>{state ? chessRatedPlayed : 0}</td> */}
+                                    <td style={{ padding: '5px' }}>{state ? chessWins : 0}</td>
+                                    <td style={{ padding: '5px' }}>{state ? chessLosses : 0}</td>
                                 </tr>
                             </tbody>
                         </table>
