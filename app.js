@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express()
 const path = require('path')
 const mongoose = require('mongoose')
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 10000
 const { MONGOURI } = require('./config/keys')
 
 mongoose.connect(MONGOURI, {
